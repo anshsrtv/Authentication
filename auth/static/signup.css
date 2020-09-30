@@ -1,0 +1,126 @@
+*{
+    margin:0;
+    /* padding:0; */
+
+}
+  body{
+      background-color:  rgb(72, 197, 235);
+      background-position: center;
+      background-size: cover;
+      font-family: Verdana;
+      margin-top: 30px;
+  }
+
+.register{
+    width:800px;
+    background-color: rgb(0,0,0,0.6);
+    margin:auto;
+    color: #ffffff;
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+    border-radius: 15px 15px 0px 0px;
+}
+
+.main{
+    background-color: rgb(0,0,0,0.5);
+    width:800px;
+    margin: auto;
+}
+
+form{
+    padding:10px;
+
+}
+
+#id_first_name{
+    position: relative;
+    left: 3px;
+    top: -5px;
+    line-height: 40px;
+    border-radius:6px;
+    padding: 0 22px;
+    font-size:16px;
+    color:#555;
+}
+#id_last_name{
+    position: relative;
+    left: 20px;
+    top: -8px;
+    line-height: 40px;
+    border-radius: 6px;
+    padding: 0 22px;
+    font-size: 16px;
+    color: #555;
+}
+
+#id_username{
+    position: relative;
+    left: 850px;
+    top: -50px;
+    line-height: 40px;
+    border-radius: 6px;
+    padding: 0 22px;
+    font-size: 16px;
+    color: #555;
+}
+
+#id_email{
+    position: relative;
+    left: 700px;
+    top: -45px;
+    line-height: 40px;
+    border-radius: 6px;
+    padding: 0 22px;
+    font-size: 16px;
+    color: #555;
+}
+#id_password1{
+    position: relative;
+    left: 20px;
+    top: -5px;
+    line-height: 40px;
+    border-radius: 6px;
+    padding: 0 22px;
+    font-size: 16px;
+    color: #555;
+}
+#id_password2{
+    position: relative;
+    left: 38px;
+    top: -8px;
+    line-height: 40px;
+    border-radius: 6px;
+    padding: 0 22px;
+    font-size: 16px;
+    color: #555;
+}
+
+/* btn btn-success{
+    background-color: #3BAF9F;
+    display: block;
+    margin: 20px 0px 0px 20px;
+    text-align:center;
+    border-radius:12px;
+    border:2px solid #0896c5;
+    padding:14px 110px;
+    outline:none;
+    color: white;
+    cursor: pointer;
+    transition: 0.25px;
+    position: relative;
+   left: 200px;
+
+}
+button:hover{
+    background-color: rgb(245, 83, 83);
+}
+.footer{
+    width:800px;
+    background-color: rgb(0,0,0,0.6);
+    margin:auto;
+    color: #ffffff;
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+    border-radius: 0px 0px 15px 15px;
+} */
+

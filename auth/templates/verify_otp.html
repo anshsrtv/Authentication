@@ -1,0 +1,23 @@
+{% load static %}
+
+
+{% block content %}
+<form class="login100-form validate-form" method="post" novalidate>
+        {% csrf_token %}
+        {% for field in form %}
+        <p>
+          <p style="color: grey">{{ field.label_tag }}
+          {{ field }}{% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+        </p>
+        <br>
+      {% endfor %}
+      <!-- {{form.as_p}} -->
+      <div class="container-login100-form-btn">
+        <button type="submit" class="login100-form-btn"   >
+          Verify
+        </button>
+      </div>
+    </form>
+    {% endblock %}
