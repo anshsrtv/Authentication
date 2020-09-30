@@ -11,7 +11,7 @@ import requests
 
 
 
-authy_api = AuthyApiClient('H7VjL9l9APs3A7LFZ0pf5jIBRD7dtVSG')
+authy_api = AuthyApiClient('')
 
 def hello_world(request):
     return render(request, 'index.html', {'user':request.user})
