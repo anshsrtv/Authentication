@@ -1,1 +1,18 @@
-<h1>{{user.contact}}</h1>
+{% if verified %}
+Please verify your email address.</br></br>
+{%endif%}
+<table style>
+    <tr>
+        <th>Name</th>
+        <td>{{user.name}}</th>
+    </tr>
+    <tr>
+        <th>Contact</th>
+        <td>{{user.contact}}</th>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>{{user.email}}</th>
+    </tr>
+
+</table>

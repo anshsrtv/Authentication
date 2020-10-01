@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -15,6 +16,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+FIELD_ENCRYPTION_KEY = SECRET_KEY
 
 # Application definition
 
@@ -27,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'django_email_verification',
+    'encrypted_model_fields',
 ]
 
 MIDDLEWARE = [
@@ -108,6 +111,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 AUTH_USER_MODEL = 'core.User'
 SIGNING_BACKEND = 'django_cryptography.core.signing.TimestampSigner'

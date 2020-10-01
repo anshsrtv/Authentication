@@ -1,32 +1,36 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from core.models import User, Authy_User
+from core.models import User
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from core.forms import SignupForm, OTPForm, LoginForm
 from authy.api import AuthyApiClient
 from django_email_verification import sendConfirm
+from django_email_verification.models import User as Email_User
 from django.http import HttpResponse
 import requests
-
+from django.contrib.auth.decorators import login_required
 
 
 authy_api = AuthyApiClient('H7VjL9l9APs3A7LFZ0pf5jIBRD7dtVSG')
 
+@login_required(login_url='login')
 def hello_world(request):
-    return render(request, 'index.html', {'user':request.user})
+    try:
+        email_user= Email_User.objects.get(
+            user = user
+        )
+    except:
+        return render(request, 'index.html', {'user':request.user, 'verified':True})
+    else:
+        return render(request, 'index.html', {'user':request.user, 'verified':False})
+    
 
 def signup(request):
    if request.method == 'POST':
        form = SignupForm(request.POST)
        if form.is_valid():
-            # user = User(
-            #    username=form.cleaned_data.get('username'),
-            #    name = form.cleaned_data.get('name'),
-            #    email=form.cleaned_data.get('email'),
-            #    contact = form.cleaned_data.get('contact'),
-            #    password = form.cleaned_data.get('password1')
-            # )
+            
             authy_user = authy_api.users.create(
                 email=form.cleaned_data.get('email'),
                 phone=form.cleaned_data.get('contact'),
@@ -37,15 +41,19 @@ def signup(request):
                 sms = authy_api.users.request_sms(authy_user.id, {'force': True})
                 if sms.ok():
                     print('SMS request successful')
-                    # d['authy_id']=authy_user.id
-                    # try:
-                    #     sendConfirm(user)
-                    # except:
-                    #     return HttpResponse('You may have entered a wrong email address. Please check it!')
-                    Authy_User.objects.create(
-                        authy_id = authy_user.id,
-                        contact = form.cleaned_data.get('contact')
+
+                    user= User.objects.create(
+                        username=form.cleaned_data.get('username'),
+                        name = form.cleaned_data.get('name'),
+                        email=form.cleaned_data.get('email'),
+                        contact = form.cleaned_data.get('contact'),
+                        password = form.cleaned_data.get('password1'),
+                        authy_id=authy_user.id
                     )
+                    try:
+                        sendConfirm(user)
+                    except:
+                        return HttpResponse('You may have entered a wrong email address. Please check it again!')
 
                     return redirect('verify_otp', authy_user.id)
                     #
@@ -70,9 +78,31 @@ def verify_otp(request, authy_id):
             # print(f"https://api.authy.com/protected/json/verify/{form.cleaned_data.get('otp')}/{authy_id}")
             verification = authy_api.tokens.verify(authy_id, token=str(form.cleaned_data.get('otp')))
             # print(req.json())
-            print(verification)
-            if(verification.ok() and verification.ok()['success']):
-                return HttpResponse("Your Contact Number is Verified!")
+            # print(verification)
+            if(verification.ok() and verification['success']):
+                status = authy_api.users.status(authy_id)
+                if status.ok():
+                    try:
+                        user = User.objects.get(authy_id=authy_id)
+                    except:
+                        return HttpResponse("User Not Registered")
+                    else:
+                        user.phone_verified=True
+                        user.save()
+                        try:
+                            email_user= Email_User.objects.get(
+                                user = user
+                            )
+                        except:
+                            login(request, user)
+                            return redirect('hello')
+                        else:
+                            login(request, user)
+                            return render(request, 'verify_email.html')
+                        
+                else:
+                    return HttpResponse("User Not Registered")
+                # return render(request, 'index.html', )
             else:
                 return HttpResponse("Wrong OTP")
     else:
@@ -83,22 +113,20 @@ def log_in(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data.get('contact'))
             try:
                 print(form.cleaned_data.get('contact'))
-                authy_user = Authy_User.objects.get(
+                user = User.objects.get(
                     contact= form.cleaned_data.get('contact')
                 )
             except:
                 return HttpResponse("Enter Registered Contact Number!")
             else:
                 sms = authy_api.users.request_sms(
-                    authy_user.authy_id, 
-                    {'action': 'login', 'action_message': 'Login code'}
+                    user.authy_id
                 )
                 print(sms)
                 if sms.ok():
-                    return redirect('verify_otp', authy_user.authy_id)
+                    return redirect('verify_otp', user.authy_id)
                 else:
                     return render(request, "500.html")
     else:
