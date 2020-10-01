@@ -12,7 +12,7 @@ import requests
 from django.contrib.auth.decorators import login_required
 
 
-authy_api = AuthyApiClient('H7VjL9l9APs3A7LFZ0pf5jIBRD7dtVSG')
+authy_api = AuthyApiClient('')
 
 @login_required(login_url='login')
 def hello_world(request):

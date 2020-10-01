@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'y0%+mq4jf#va8u!f$+v^5utx@92m$9_5+2h8t%_a*$_$)@)99k'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -122,7 +122,7 @@ EMAIL_SERVER = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_ADDRESS = 'naughty.ansh007@gmail.com'
 EMAIL_FROM_ADDRESS = 'noreply@anshaddress.com'
-EMAIL_PASSWORD = 'Ifftom@123' # os.environ['password_key'] suggested
+EMAIL_PASSWORD = '' # os.environ['password_key'] suggested
 EMAIL_MAIL_SUBJECT = 'Confirm your email'
 EMAIL_MAIL_HTML = 'mail_body.html'
 # EMAIL_MAIL_PLAIN = 'mail_body.txt'
