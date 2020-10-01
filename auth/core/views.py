@@ -21,9 +21,9 @@ def hello_world(request):
             user = user
         )
     except:
-        return render(request, 'index.html', {'user':request.user, 'verified':True})
+        return render(request, 'index.html', {'user':request.user, 'not_verified':False})
     else:
-        return render(request, 'index.html', {'user':request.user, 'verified':False})
+        return render(request, 'index.html', {'user':request.user, 'not_verified':True})
     
 
 def signup(request):
