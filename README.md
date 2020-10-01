@@ -12,7 +12,7 @@
     1. `export EMAIL_ADDRESS = 'YOUR_EMAIL_ADDRESS'`
     1. `export EMAIL_PASSWORD = 'YOUR_EMAIL_PASSWORD'`
     
-    **NOTE: Make sure the email address you use has `Less Secure App Access` and no `Two-Factor Authentication` to allow emails to be sent.**
+    **NOTE: Make sure the email address you use has `Less Secure App Access` and no `Two-Factor Authentication` to allow emails to be sent by the application.**
 1. Make Migrations if needed `python manage.py makemigrations`
 1. Migrate the migrations: `python manage.py migrate`
 1. Run the app: `python manage.py runserver`
